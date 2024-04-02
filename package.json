@@ -1,0 +1,34 @@
+{
+	"name": "blockparty-key-figure",
+	"version": "1.2.0",
+	"description": "Key Figure block for WordPress.",
+	"author": "Be API Technical team",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start",
+		"make-pot": "wp i18n make-pot . languages/blockparty-key-figure.pot --slug=blockparty-key-figure --domain=blockparty-key-figure --exclude=node_modules,src",
+		"make-json": "wp i18n make-json languages/ --no-purge"
+	},
+	"devDependencies": {
+		"@wordpress/components": "^27.2.0",
+		"@wordpress/eslint-plugin": "^17.11.0",
+		"@wordpress/prettier-config": "^3.11.0",
+		"@wordpress/scripts": "^27.5.0",
+		"@wordpress/stylelint-config": "^21.37.0"
+	},
+	"dependencies": {
+		"@beapi/icons": "^1.1.1",
+		"classnames": "^2.3.2"
+	},
+	"prettier": "@wordpress/prettier-config",
+	"volta": {
+		"node": "20"
+	}
+}

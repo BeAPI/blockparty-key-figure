@@ -1,0 +1,61 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "blockparty/key-figure",
+	"version": "1.0.0",
+	"title": "Key Figure",
+	"category": "widgets",
+	"description": "Key Figure block.",
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		}
+	},
+	"attributes": {
+		"align": {
+			"type": "string"
+		},
+		"decimalSeparator": {
+			"type": "string",
+			"default": "none"
+		},
+		"minimumFractionDigits": {
+			"type": "number",
+			"default": 3
+		},
+		"prefix": {
+			"type": "string",
+			"source": "text",
+			"selector": ".wp-block-blockparty-key-figure__prefix",
+			"default": "+"
+		},
+		"number": {
+			"type": "string",
+			"source": "attribute",
+            "selector": ".wp-block-blockparty-key-figure__number",
+            "attribute": "data-increment",
+			"default": "100"
+		},
+		"suffix": {
+			"type": "string",
+			"source": "text",
+			"selector": ".wp-block-blockparty-key-figure__suffix",
+			"default": "%"
+		},
+		"description": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-blockparty-key-figure__description"
+		}
+	},
+	"textdomain": "blockparty-key-figure",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
