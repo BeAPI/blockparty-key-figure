@@ -18,7 +18,6 @@ namespace Blockparty\Key_Figure;
 define( 'BLOCKPARTY_KEY_FIGURE_VERSION', '1.2.0' );
 define( 'BLOCKPARTY_KEY_FIGURE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BLOCKPARTY_KEY_FIGURE_DIR', plugin_dir_path( __FILE__ ) );
-define( 'BLOCKPARTY_KEY_FIGURE_PLUGIN_DIRNAME', basename( rtrim( dirname( __FILE__ ), '/' ) ) );
 
 define(
 	'BLOCKPARTY_KEY_FIGURE_NUMBER_FORMAT_LOCALES',

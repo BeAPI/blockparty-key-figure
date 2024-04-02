@@ -27,6 +27,5 @@ grumphp:
       triggered_by: ['php']
       show_info: true
     yamllint:
-    jsonlint:
   testsuites: []
   extensions: []
