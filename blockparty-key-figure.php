@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Be API Key Figure block
+ * Plugin Name:       Blockparty Key Figure
  * Description:       Key Figure block for WordPress.
  * Requires at least: 6.2
  * Requires PHP:      8.1

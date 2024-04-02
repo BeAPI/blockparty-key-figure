@@ -3,32 +3,36 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Be API Key Figure block 1.1.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/blockparty-key-figure-"
-"block\n"
-"POT-Creation-Date: 2023-10-19T07:10:26+00:00\n"
-"PO-Revision-Date: 2023-10-19 09:17+0200\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/blockparty-key-"
+"figure\n"
+"POT-Creation-Date: 2024-04-02T21:11:52+00:00\n"
+"PO-Revision-Date: 2024-04-02 23:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Domain: blockparty-key-figure\n"
 
 #. Plugin Name of the plugin
-msgid "Be API Key Figure block"
-msgstr "Be API Bloc chiffre clé"
+#: blockparty-key-figure.php
+msgid "Blockparty Key Figure"
+msgstr "Blockparty chiffre clé"
 
 #. Description of the plugin
+#: blockparty-key-figure.php
 msgid "Key Figure block for WordPress."
-msgstr "Bloc chiffre clé pour WordPress"
+msgstr "Bloc chiffre clé pour WordPress."
 
 #. Author of the plugin
+#: blockparty-key-figure.php
 msgid "Be API Technical team"
 msgstr "Be API Équipe téchnique"
 
 #. Author URI of the plugin
+#: blockparty-key-figure.php
 msgid "https://beapi.fr"
 msgstr ""
 
@@ -88,7 +92,10 @@ msgstr "Chiffre clé"
 #: build/block.json
 msgctxt "block description"
 msgid "Key Figure block."
-msgstr "Bloc chiffre clé"
+msgstr "Bloc chiffre clé."
+
+#~ msgid "Be API Key Figure block"
+#~ msgstr "Be API Bloc chiffre clé"
 
 #~ msgid "Decimal separator"
 #~ msgstr "Séparateur décimal"
