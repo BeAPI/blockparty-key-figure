@@ -1,8 +1,8 @@
 === Key Figure Block ===
 Contributors:      beapi, candrietti
 Tags:              block, key, figure, gutenberg
-Tested up to:      6.0
-Stable tag:        1.0.0
+Tested up to:      6.5
+Stable tag:        1.0.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,3 +27,6 @@ This block allow to set a prefix, suffix and a number. It's possible to change t
 
 = 1.0.0 - 2024-04-02 =
 * Initial plugin release
+
+= 1.0.1 - 2024-04-03 =
+* Fix plugin internal version
