@@ -2,7 +2,7 @@
 Contributors:      beapi, candrietti
 Tags:              block, key, figure, gutenberg
 Tested up to:      6.5
-Stable tag:        1.0.1
+Stable tag:        1.0.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,3 +30,6 @@ This block allow to set a prefix, suffix and a number. It's possible to change t
 
 = 1.0.1 - 2024-04-03 =
 * Fix plugin internal version
+
+= 1.0.2 - 2024-06-06 =
+* Add support for PHP 8.2
