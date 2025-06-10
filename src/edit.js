@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import { useEffect, useRef } from '@wordpress/element';
 
 import {
 	useBlockProps,
@@ -19,6 +20,37 @@ import classnames from 'classnames';
 
 import './editor.scss';
 
+// Custom hook for number formatting
+function useNumberFormatter(number, decimalSeparator, minimumFractionDigits) {
+	const formatNumber = (numberToFormat) => {
+		if (!numberToFormat && numberToFormat !== 0) {
+			return numberToFormat;
+		}
+
+		if (decimalSeparator === 'none') {
+			return numberToFormat.toString();
+		} else if (decimalSeparator === '.' || decimalSeparator === ',') {
+			return (numberToFormat || 0)
+				.toString()
+				.replace('.', decimalSeparator);
+		}
+
+		const options = {
+			minimumFractionDigits: minimumFractionDigits || 0,
+		};
+		
+		try {
+			return new Intl.NumberFormat(decimalSeparator, options).format(
+				numberToFormat
+			);
+		} catch (error) {
+			return numberToFormat.toString();
+		}
+	};
+
+	return formatNumber(number);
+}
+
 export default function Edit( { attributes, setAttributes } ) {
 	const {
 		align,
@@ -29,6 +61,16 @@ export default function Edit( { attributes, setAttributes } ) {
 		suffix,
 		description,
 	} = attributes;
+
+	const numberRef = useRef();
+	const formattedNumber = useNumberFormatter(number, decimalSeparator, minimumFractionDigits);
+
+	// Update the number display when formatting changes
+	useEffect(() => {
+		if (numberRef.current) {
+			numberRef.current.textContent = formattedNumber;
+		}
+	}, [formattedNumber]);
 
 	const blockProps = useBlockProps( {
 		className: classnames( {
@@ -62,23 +104,6 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const onChangeMinimumFractionDigits = ( newMinimumFractionDigits ) => {
 		setAttributes( { minimumFractionDigits: newMinimumFractionDigits } );
-	};
-
-	const formattedNumber = ( numberToFormat ) => {
-		if ( 'none' === decimalSeparator ) {
-			return numberToFormat;
-		} else if ( '.' === decimalSeparator || ',' === decimalSeparator ) {
-			return ( numberToFormat || 0 )
-				.toString()
-				.replace( '.', decimalSeparator );
-		}
-
-		const options = {
-			minimumFractionDigits,
-		};
-		return new Intl.NumberFormat( decimalSeparator, options ).format(
-			numberToFormat
-		);
 	};
 
 	return (
@@ -172,10 +197,13 @@ export default function Edit( { attributes, setAttributes } ) {
 						{ prefix }
 					</span>
 					<span
+						ref={ numberRef }
 						className="wp-block-blockparty-key-figure__number"
 						data-increment={ number }
+						data-decimal-separator={ decimalSeparator }
+						data-minimum-fraction-digits={ minimumFractionDigits }
 					>
-						{ formattedNumber( number ) }
+						{ formattedNumber }
 					</span>
 					<span className="wp-block-blockparty-key-figure__suffix">
 						{ suffix }

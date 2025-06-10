@@ -19,23 +19,6 @@ export default function save( { attributes } ) {
 		} ),
 	} );
 
-	const formattedNumber = ( numberToFormat ) => {
-		if ( 'none' === decimalSeparator ) {
-			return numberToFormat;
-		} else if ( '.' === decimalSeparator || ',' === decimalSeparator ) {
-			return ( numberToFormat || 0 )
-				.toString()
-				.replace( '.', decimalSeparator );
-		}
-
-		const options = {
-			minimumFractionDigits,
-		};
-		return new Intl.NumberFormat( decimalSeparator, options ).format(
-			numberToFormat
-		);
-	};
-
 	return (
 		<div { ...blockProps }>
 			<div className="wp-block-blockparty-key-figure__key">
@@ -45,8 +28,10 @@ export default function save( { attributes } ) {
 				<span
 					className="wp-block-blockparty-key-figure__number"
 					data-increment={ number }
+					data-decimal-separator={ decimalSeparator }
+					data-minimum-fraction-digits={ minimumFractionDigits }
 				>
-					{ formattedNumber( number ) }
+					{ number }
 				</span>
 				<span className="wp-block-blockparty-key-figure__suffix">
 					{ suffix }
