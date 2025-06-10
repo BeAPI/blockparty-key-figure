@@ -2,7 +2,7 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 import classnames from 'classnames';
 
-export default function save( { attributes } ) {
+export default function save({ attributes }) {
 	const {
 		align,
 		prefix,
@@ -13,34 +13,34 @@ export default function save( { attributes } ) {
 		description,
 	} = attributes;
 
-	const blockProps = useBlockProps.save( {
-		className: classnames( {
-			[ `has-text-align-${ align }` ]: align,
-		} ),
-	} );
+	const blockProps = useBlockProps.save({
+		className: classnames({
+			[`has-text-align-${align}`]: align,
+		}),
+	});
 
 	return (
-		<div { ...blockProps }>
+		<div {...blockProps}>
 			<div className="wp-block-blockparty-key-figure__key">
 				<span className="wp-block-blockparty-key-figure__prefix">
-					{ prefix }
+					{prefix}
 				</span>
 				<span
 					className="wp-block-blockparty-key-figure__number"
-					data-increment={ number }
-					data-decimal-separator={ decimalSeparator }
-					data-minimum-fraction-digits={ minimumFractionDigits }
+					data-increment={number}
+					data-decimal-separator={decimalSeparator}
+					data-minimum-fraction-digits={minimumFractionDigits}
 				>
-					{ number }
+					{number}
 				</span>
 				<span className="wp-block-blockparty-key-figure__suffix">
-					{ suffix }
+					{suffix}
 				</span>
 			</div>
 			<RichText.Content
 				tagName="p"
 				className="wp-block-blockparty-key-figure__description"
-				value={ description }
+				value={description}
 			/>
 		</div>
 	);
