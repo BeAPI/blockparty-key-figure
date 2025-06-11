@@ -48,10 +48,8 @@
 		"vimeo/psalm": "^5.20",
 		"wp-coding-standards/wpcs": "^3.0"
 	},
-	"autoload": {
-	},
-	"autoload-dev": {
-	},
+	"autoload": {},
+	"autoload-dev": {},
 	"scripts": {
 		"cs": "./vendor/bin/phpcs",
 		"cb": "./vendor/bin/phpcbf",
