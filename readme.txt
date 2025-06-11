@@ -2,7 +2,7 @@
 Contributors:      beapi, candrietti
 Tags:              block, key, figure, gutenberg
 Tested up to:      6.5
-Stable tag:        1.0.3
+Stable tag:        1.0.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,3 +36,6 @@ This block allow to set a prefix, suffix and a number. It's possible to change t
 
 = 1.0.3 - 2024-06-10 =
 * Fix composer name (from blockparty/key-figure to beapi/blockparty-key-figure)
+
+= 1.0.4 - 2025-06-11 =
+* Move number formatting to JavaScript and save unformatted numbers.
