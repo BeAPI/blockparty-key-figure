@@ -2,7 +2,7 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 import classnames from 'classnames';
 
-export default function save( { attributes } ) {
+export default function save({ attributes }) {
 	const {
 		align,
 		prefix,
@@ -13,49 +13,34 @@ export default function save( { attributes } ) {
 		description,
 	} = attributes;
 
-	const blockProps = useBlockProps.save( {
-		className: classnames( {
-			[ `has-text-align-${ align }` ]: align,
-		} ),
-	} );
-
-	const formattedNumber = ( numberToFormat ) => {
-		if ( 'none' === decimalSeparator ) {
-			return numberToFormat;
-		} else if ( '.' === decimalSeparator || ',' === decimalSeparator ) {
-			return ( numberToFormat || 0 )
-				.toString()
-				.replace( '.', decimalSeparator );
-		}
-
-		const options = {
-			minimumFractionDigits,
-		};
-		return new Intl.NumberFormat( decimalSeparator, options ).format(
-			numberToFormat
-		);
-	};
+	const blockProps = useBlockProps.save({
+		className: classnames({
+			[`has-text-align-${align}`]: align,
+		}),
+	});
 
 	return (
-		<div { ...blockProps }>
+		<div {...blockProps}>
 			<div className="wp-block-blockparty-key-figure__key">
 				<span className="wp-block-blockparty-key-figure__prefix">
-					{ prefix }
+					{prefix}
 				</span>
 				<span
 					className="wp-block-blockparty-key-figure__number"
-					data-increment={ number }
+					data-increment={number}
+					data-decimal-separator={decimalSeparator}
+					data-minimum-fraction-digits={minimumFractionDigits}
 				>
-					{ formattedNumber( number ) }
+					{number}
 				</span>
 				<span className="wp-block-blockparty-key-figure__suffix">
-					{ suffix }
+					{suffix}
 				</span>
 			</div>
 			<RichText.Content
 				tagName="p"
 				className="wp-block-blockparty-key-figure__description"
-				value={ description }
+				value={description}
 			/>
 		</div>
 	);
