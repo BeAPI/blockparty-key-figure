@@ -4,7 +4,7 @@
  * Description:       Key Figure block for WordPress.
  * Requires at least: 6.2
  * Requires PHP:      8.1
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            Be API Technical team
  * Author URI:        https://beapi.fr
  * License:           GPL-2.0-or-later
@@ -15,7 +15,7 @@
 
 namespace Blockparty\Key_Figure;
 
-define( 'BLOCKPARTY_KEY_FIGURE_VERSION', '1.0.3' );
+define( 'BLOCKPARTY_KEY_FIGURE_VERSION', '1.0.4' );
 define( 'BLOCKPARTY_KEY_FIGURE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BLOCKPARTY_KEY_FIGURE_DIR', plugin_dir_path( __FILE__ ) );
 
