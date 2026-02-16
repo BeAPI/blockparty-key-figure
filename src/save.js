@@ -21,7 +21,7 @@ export default function save({ attributes }) {
 
 	return (
 		<div {...blockProps}>
-			<div className="wp-block-blockparty-key-figure__key">
+			<p className="wp-block-blockparty-key-figure__key">
 				<span className="wp-block-blockparty-key-figure__prefix">
 					{prefix}
 				</span>
@@ -36,7 +36,7 @@ export default function save({ attributes }) {
 				<span className="wp-block-blockparty-key-figure__suffix">
 					{suffix}
 				</span>
-			</div>
+			</p>
 			<RichText.Content
 				tagName="p"
 				className="wp-block-blockparty-key-figure__description"
