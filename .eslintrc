@@ -1,7 +1,5 @@
 {
-	"extends": [
-		"plugin:@wordpress/eslint-plugin/recommended"
-	],
+	"extends": [ "plugin:@wordpress/eslint-plugin/recommended" ],
 	"env": {
 		"browser": true,
 		"node": true,
@@ -14,5 +12,22 @@
 	"globals": {
 		"jQuery": true,
 		"wp": true
-	}
+	},
+	"settings": {
+		"import/resolver": "node"
+	},
+	"rules": {
+		"import/no-unresolved": [
+			"error",
+			{ "ignore": [ "^@wordpress/" ] }
+		]
+	},
+	"overrides": [
+		{
+			"files": [ "src/**/*.js" ],
+			"rules": {
+				"import/no-extraneous-dependencies": "off"
+			}
+		}
+	]
 }
