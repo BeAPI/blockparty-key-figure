@@ -1,6 +1,6 @@
 {
 	"name": "blockparty-key-figure",
-	"version": "1.0.4",
+	"version": "1.1.0",
 	"description": "Key Figure block for WordPress.",
 	"author": "Be API Technical team",
 	"license": "GPL-2.0-or-later",
@@ -14,21 +14,23 @@
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start",
 		"make-pot": "wp i18n make-pot . languages/blockparty-key-figure.pot --slug=blockparty-key-figure --domain=blockparty-key-figure --exclude=node_modules,src",
-		"make-json": "wp i18n make-json languages/ --no-purge"
+		"make-json": "wp i18n make-json languages/ --no-purge",
+		"start:env": "wp-env start --config=./wp-env.json",
+		"stop:env": "wp-env stop --config=./wp-env.json"
 	},
 	"devDependencies": {
-		"@wordpress/components": "^27.2.0",
-		"@wordpress/eslint-plugin": "^17.11.0",
-		"@wordpress/prettier-config": "^3.11.0",
-		"@wordpress/scripts": "^27.5.0",
-		"@wordpress/stylelint-config": "^21.37.0"
+		"@wordpress/env": "^10.39.0",
+		"@wordpress/eslint-plugin": "^24.1.0",
+		"@wordpress/prettier-config": "^4.39.0",
+		"@wordpress/scripts": "^31.4.0",
+		"@wordpress/stylelint-config": "^23.31.0"
 	},
 	"dependencies": {
-		"@beapi/icons": "^1.1.1",
+		"@beapi/icons": "^1.2.5",
 		"classnames": "^2.3.2"
 	},
 	"prettier": "@wordpress/prettier-config",
 	"volta": {
-		"node": "20"
+		"node": "22.22.0"
 	}
 }

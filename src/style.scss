@@ -6,6 +6,7 @@
     --wp--blockparty--key-figure--suffix-mobile-size: 30px;
     --wp--blockparty--key-figure--description-desktop-size: 32px;
     --wp--blockparty--key-figure--description-mobile-size: 18px;
+    --wp--blockparty--key-figure--key--margin: 0;
 
     $block: &;
 
@@ -20,6 +21,7 @@
     #{$block}__key {
         display: inline-flex;
         align-items: center;
+        margin: var(--wp--blockparty--key-figure--key--margin);
     }
 
     #{$block}__prefix,
