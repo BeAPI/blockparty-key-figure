@@ -2,7 +2,7 @@
 Contributors:      beapi, candrietti
 Tags:              block, key, figure, gutenberg
 Tested up to:      6.5
-Stable tag:        1.0.4
+Stable tag:        1.1.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,3 +39,6 @@ This block allow to set a prefix, suffix and a number. It's possible to change t
 
 = 1.0.4 - 2025-06-11 =
 * Move number formatting to JavaScript and save unformatted numbers.
+
+= 1.1.0 - 2026-02-16 =
+* Markup change: __key wrapper was div, now p (a11y/semantic)
