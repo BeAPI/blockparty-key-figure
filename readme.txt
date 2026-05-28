@@ -43,5 +43,6 @@ This block allow to set a prefix, suffix and a number. It's possible to change t
 = 1.1.0 - 2026-02-16 =
 * Markup change: __key wrapper was div, now p (a11y/semantic)
 
-= 1.1.1 - 2026-05-28 =
+= 1.1.1 - 2026-09-04 =
 * Add block example.
+* Move suffix attribute after number control for UX improvment
