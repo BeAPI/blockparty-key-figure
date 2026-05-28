@@ -60,6 +60,14 @@
 			"selector": ".wp-block-blockparty-key-figure__description"
 		}
 	},
+	"example": {
+		"attributes": {
+			"prefix": "+",
+			"number": "100",
+			"suffix": "%",
+			"description": "Lorem ipsum"
+		}
+	},
 	"textdomain": "blockparty-key-figure",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
