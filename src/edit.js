@@ -119,16 +119,16 @@ export default function Edit({ attributes, setAttributes }) {
 						value={prefix}
 						onChange={onChangePrefix}
 					/>
-					<TextControl
-						label={__('Suffix', 'blockparty-key-figure')}
-						value={suffix}
-						onChange={onChangeSuffix}
-					/>
 					<NumberControl
 						label={__('Number', 'blockparty-key-figure')}
 						isShiftStepEnabled={false}
 						value={number}
 						onChange={onChangeNumber}
+					/>
+					<TextControl
+						label={__('Suffix', 'blockparty-key-figure')}
+						value={suffix}
+						onChange={onChangeSuffix}
 					/>
 					<SelectControl
 						label={__(
