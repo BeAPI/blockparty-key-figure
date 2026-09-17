@@ -238,7 +238,28 @@ class KeyFigureBlockMigrator {
 			$markup
 		);
 
-		return $this->convert_key_wrapper( $markup );
+		return $this->ensure_description( $this->convert_key_wrapper( $markup ) );
+	}
+
+	/**
+	 * Add the description paragraph that the current block always saves.
+	 *
+	 * @param string $markup Renamed block markup.
+	 * @return string
+	 */
+	private function ensure_description( string $markup ): string {
+		if ( false !== strpos( $markup, self::CLASS_ROOT . '__description' ) ) {
+			return $markup;
+		}
+
+		$paragraph = sprintf( '<p class="%s__description"></p>', self::CLASS_ROOT );
+		$wrapper   = strrpos( $markup, '</div>' );
+
+		if ( false === $wrapper ) {
+			return $markup . $paragraph;
+		}
+
+		return substr_replace( $markup, $paragraph, $wrapper, 0 );
 	}
 
 	/**
