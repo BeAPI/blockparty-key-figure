@@ -33,24 +33,24 @@ The command scans the post content of every post type (revisions and reusable bl
 2. Renames `wp-block-beapi-key-figure` to `wp-block-blockparty-key-figure`, including the `__key`, `__prefix`, `__number`, `__suffix` and `__description` elements.
 3. Aligns the markup with the current block output, unless `--no-modernize` is used: `p` key wrapper (instead of `div`), `data-decimal-separator` and `data-minimum-fraction-digits` on the number, and the raw number as text since formatting now happens on the front end.
 
-It runs as a dry-run by default, and must be run manually on the server:
+It must be run manually on the server:
 
-    # Report what would change.
-    wp blockparty key-figure migrate
+    # Preview changes without writing to the database.
+    wp blockparty key-figure migrate --dry-run
 
     # Apply the migration.
-    wp blockparty key-figure migrate --live
+    wp blockparty key-figure migrate
 
     # Only rename the block and its CSS classes.
-    wp blockparty key-figure migrate --live --no-modernize
+    wp blockparty key-figure migrate --no-modernize
 
     # Limit the migration to some post types, with a smaller batch size.
-    wp blockparty key-figure migrate --live --post-type=post,page --posts-per-page=20
+    wp blockparty key-figure migrate --post-type=post,page --posts-per-page=20
 
 The command always targets a single site. On multisite, run it for each site with the native `--url` parameter:
 
-    wp blockparty key-figure migrate --live --url=example.com
-    wp blockparty key-figure migrate --live --url=example.com/site-2
+    wp blockparty key-figure migrate --url=example.com
+    wp blockparty key-figure migrate --url=example.com/site-2
 
 Run `wp help blockparty key-figure migrate` for the full list of options.
 

@@ -24,11 +24,11 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 	const WIDGETS_OPTION = 'widget_block';
 
 	/**
-	 * Whether the content is saved.
+	 * Whether the content is reported without being saved.
 	 *
 	 * @var bool
 	 */
-	private bool $live = false;
+	private bool $dry_run = false;
 
 	/**
 	 * Whether the markup is aligned with the current block output.
@@ -101,13 +101,13 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 	 * `--no-modernize` is used, the saved markup is also aligned with the current
 	 * block output so migrated blocks stay valid in the editor.
 	 *
-	 * Runs as a dry-run unless `--live` is passed, and always targets a single
-	 * site. On multisite, use the global `--url` parameter to pick the site.
+	 * Always targets a single site. On multisite, use the global `--url`
+	 * parameter to pick the site.
 	 *
 	 * ## OPTIONS
 	 *
-	 * [--live]
-	 * : Save the migrated content. Without this flag nothing is written to the database.
+	 * [--dry-run]
+	 * : Report changes without updating the database.
 	 *
 	 * [--[no-]modernize]
 	 * : Align the markup with the current block output: `p` key wrapper and number data attributes. Default: true.
@@ -123,38 +123,35 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     # Report what would change.
+	 *     # Apply the migration.
 	 *     wp blockparty key-figure migrate
 	 *
-	 *     # Apply the migration.
-	 *     wp blockparty key-figure migrate --live
+	 *     # Report what would change.
+	 *     wp blockparty key-figure migrate --dry-run
 	 *
 	 *     # Migrate one site of a network, revisions excluded.
-	 *     wp blockparty key-figure migrate --live --skip-revisions --url=example.com/site-2
+	 *     wp blockparty key-figure migrate --skip-revisions --url=example.com/site-2
 	 *
 	 *     # Only rename the block and its CSS classes.
-	 *     wp blockparty key-figure migrate --live --no-modernize
+	 *     wp blockparty key-figure migrate --no-modernize
 	 *
-	 * @param string[]                  $args       Positional arguments.
+	 * @param string[]                   $args       Positional arguments.
 	 * @param array<string, bool|string> $assoc_args Associative arguments.
 	 * @return void
 	 */
 	public function __invoke( $args, $assoc_args ): void {
-		$this->live              = (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'live', false );
+		$this->dry_run           = (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'dry-run', false );
 		$this->modernize         = (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'modernize', true );
 		$this->include_revisions = ! (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'skip-revisions', false );
 		$this->batch_size        = max( 1, (int) WP_CLI\Utils\get_flag_value( $assoc_args, 'posts-per-page', 100 ) );
 		$this->post_types        = $this->resolve_post_types( (string) WP_CLI\Utils\get_flag_value( $assoc_args, 'post-type', '' ) );
 
-		if ( ! $this->live ) {
-			WP_CLI::warning( 'Dry run: nothing is saved. Add --live to apply the migration.' );
-		}
-
 		WP_CLI::log(
 			sprintf(
-				'Site %1$d (%2$s) — post types: %3$s, revisions: %4$s, modernize: %5$s',
+				'Migrating site %1$d (%2$s)%3$s — post types: %4$s, revisions: %5$s, modernize: %6$s',
 				get_current_blog_id(),
 				home_url( '/' ),
+				$this->dry_run ? ' [dry-run]' : '',
 				empty( $this->post_types ) ? 'all' : implode( ', ', $this->post_types ),
 				$this->include_revisions ? 'yes' : 'no',
 				$this->modernize ? 'yes' : 'no'
@@ -168,7 +165,7 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 			sprintf(
 				'Done. Posts scanned: %1$d, posts %2$s: %3$d, widgets %2$s: %4$d, blocks renamed: %5$d, markup modernized: %6$d, markup skipped: %7$d.',
 				$this->posts_scanned,
-				$this->live ? 'updated' : 'to update',
+				$this->dry_run ? 'that would update' : 'updated',
 				$this->posts_updated,
 				$this->widgets_updated,
 				$this->migrator->renamed,
@@ -209,13 +206,13 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 				WP_CLI::log(
 					sprintf(
 						'%1$s post %2$d (%3$s)',
-						$this->live ? '[update]' : '[dry-run]',
+						$this->dry_run ? '[dry-run]' : '[update]',
 						(int) $post->ID,
 						(string) $post->post_type
 					)
 				);
 
-				if ( $this->live ) {
+				if ( ! $this->dry_run ) {
 					$this->save_post( $post, $content );
 				}
 			}
@@ -259,13 +256,13 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 			WP_CLI::log(
 				sprintf(
 					'%1$s block widget %2$s',
-					$this->live ? '[update]' : '[dry-run]',
+					$this->dry_run ? '[dry-run]' : '[update]',
 					(string) $key
 				)
 			);
 		}
 
-		if ( $updated > 0 && $this->live ) {
+		if ( $updated > 0 && ! $this->dry_run ) {
 			update_option( self::WIDGETS_OPTION, $widgets );
 		}
 	}
