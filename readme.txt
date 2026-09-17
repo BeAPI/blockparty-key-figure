@@ -23,6 +23,35 @@ This block allow to set a prefix, suffix and a number. It's possible to change t
 
 1. Block configuration in columns block
 
+== Migration from beapi/key-figure ==
+
+Content created with the legacy `beapi/key-figure-block` plugin still stores the old block name (`wp:beapi/key-figure`) and the old BEM root class (`wp-block-beapi-key-figure`). Those blocks are invalid in the editor until the content is rewritten, which the `wp blockparty key-figure migrate` WP-CLI command does.
+
+The command scans the post content of every post type (revisions and reusable blocks included) and the block widgets, then:
+
+1. Renames `wp:beapi/key-figure` to `wp:blockparty/key-figure`, keeping the block attributes.
+2. Renames `wp-block-beapi-key-figure` to `wp-block-blockparty-key-figure`, including the `__key`, `__prefix`, `__number`, `__suffix` and `__description` elements.
+3. Aligns the markup with the current block output, unless `--no-modernize` is used: `p` key wrapper (instead of `div`), `data-decimal-separator` and `data-minimum-fraction-digits` on the number, and the raw number as text since formatting now happens on the front end.
+
+It runs as a dry-run by default, and must be run manually on the server:
+
+    # Report what would change, on every site of the network.
+    wp blockparty key-figure migrate
+
+    # Apply the migration.
+    wp blockparty key-figure migrate --live
+
+    # Migrate a single site of the network, revisions excluded.
+    wp blockparty key-figure migrate --live --blog_id=2 --skip-revisions
+
+    # Only rename the block and its CSS classes.
+    wp blockparty key-figure migrate --live --no-modernize
+
+    # Limit the migration to some post types, with a smaller batch size.
+    wp blockparty key-figure migrate --live --post-type=post,page --posts-per-page=20
+
+Run `wp help blockparty key-figure migrate` for the full list of options.
+
 == Changelog ==
 
 = 1.0.0 - 2024-04-02 =
