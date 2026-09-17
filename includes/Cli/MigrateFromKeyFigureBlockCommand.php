@@ -101,7 +101,8 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 	 * `--no-modernize` is used, the saved markup is also aligned with the current
 	 * block output so migrated blocks stay valid in the editor.
 	 *
-	 * Runs as a dry-run unless `--live` is passed.
+	 * Runs as a dry-run unless `--live` is passed, and always targets a single
+	 * site. On multisite, use the global `--url` parameter to pick the site.
 	 *
 	 * ## OPTIONS
 	 *
@@ -114,9 +115,6 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 	 * [--skip-revisions]
 	 * : Leave post revisions untouched.
 	 *
-	 * [--blog_id=<id>]
-	 * : Only migrate this site of the network. Default: every site.
-	 *
 	 * [--post-type=<post-types>]
 	 * : Comma-separated list of post types to migrate. Default: every post type.
 	 *
@@ -125,14 +123,14 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     # Report what would change, on every site.
+	 *     # Report what would change.
 	 *     wp blockparty key-figure migrate
 	 *
-	 *     # Migrate every site of the network.
+	 *     # Apply the migration.
 	 *     wp blockparty key-figure migrate --live
 	 *
-	 *     # Migrate a single site, revisions excluded.
-	 *     wp blockparty key-figure migrate --live --blog_id=2 --skip-revisions
+	 *     # Migrate one site of a network, revisions excluded.
+	 *     wp blockparty key-figure migrate --live --skip-revisions --url=example.com/site-2
 	 *
 	 *     # Only rename the block and its CSS classes.
 	 *     wp blockparty key-figure migrate --live --no-modernize
@@ -148,40 +146,27 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 		$this->batch_size        = max( 1, (int) WP_CLI\Utils\get_flag_value( $assoc_args, 'posts-per-page', 100 ) );
 		$this->post_types        = $this->resolve_post_types( (string) WP_CLI\Utils\get_flag_value( $assoc_args, 'post-type', '' ) );
 
-		$sites = $this->resolve_sites( $assoc_args );
-
 		if ( ! $this->live ) {
 			WP_CLI::warning( 'Dry run: nothing is saved. Add --live to apply the migration.' );
 		}
 
-		foreach ( $sites as $site_id ) {
-			if ( is_multisite() ) {
-				switch_to_blog( $site_id );
-			}
+		WP_CLI::log(
+			sprintf(
+				'Site %1$d (%2$s) — post types: %3$s, revisions: %4$s, modernize: %5$s',
+				get_current_blog_id(),
+				home_url( '/' ),
+				empty( $this->post_types ) ? 'all' : implode( ', ', $this->post_types ),
+				$this->include_revisions ? 'yes' : 'no',
+				$this->modernize ? 'yes' : 'no'
+			)
+		);
 
-			WP_CLI::log(
-				sprintf(
-					'Site %1$d (%2$s) — post types: %3$s, revisions: %4$s, modernize: %5$s',
-					$site_id,
-					home_url( '/' ),
-					empty( $this->post_types ) ? 'all' : implode( ', ', $this->post_types ),
-					$this->include_revisions ? 'yes' : 'no',
-					$this->modernize ? 'yes' : 'no'
-				)
-			);
-
-			$this->migrate_posts();
-			$this->migrate_widgets();
-
-			if ( is_multisite() ) {
-				restore_current_blog();
-			}
-		}
+		$this->migrate_posts();
+		$this->migrate_widgets();
 
 		WP_CLI::success(
 			sprintf(
-				'Done. Sites: %1$d, posts scanned: %2$d, posts %3$s: %4$d, widgets %3$s: %5$d, blocks renamed: %6$d, markup modernized: %7$d, markup skipped: %8$d.',
-				count( $sites ),
+				'Done. Posts scanned: %1$d, posts %2$s: %3$d, widgets %2$s: %4$d, blocks renamed: %5$d, markup modernized: %6$d, markup skipped: %7$d.',
 				$this->posts_scanned,
 				$this->live ? 'updated' : 'to update',
 				$this->posts_updated,
@@ -362,42 +347,6 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 				)
 			);
 		}
-	}
-
-	/**
-	 * Resolve the sites to migrate.
-	 *
-	 * @param array<string, bool|string> $assoc_args Associative arguments.
-	 * @return int[]
-	 */
-	private function resolve_sites( array $assoc_args ): array {
-		$blog_id = (int) WP_CLI\Utils\get_flag_value( $assoc_args, 'blog_id', 0 );
-
-		if ( ! is_multisite() ) {
-			if ( $blog_id > 0 && get_current_blog_id() !== $blog_id ) {
-				WP_CLI::error( 'The --blog_id flag requires a multisite installation.' );
-			}
-
-			return [ get_current_blog_id() ];
-		}
-
-		if ( $blog_id > 0 ) {
-			if ( null === get_site( $blog_id ) ) {
-				WP_CLI::error( sprintf( 'Site %d does not exist.', $blog_id ) );
-			}
-
-			return [ $blog_id ];
-		}
-
-		return array_map(
-			'intval',
-			get_sites(
-				[
-					'fields' => 'ids',
-					'number' => 0,
-				]
-			)
-		);
 	}
 
 	/**
