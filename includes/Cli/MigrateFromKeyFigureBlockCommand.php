@@ -161,18 +161,7 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 		$this->migrate_posts();
 		$this->migrate_widgets();
 
-		WP_CLI::success(
-			sprintf(
-				'Done. Posts scanned: %1$d, posts %2$s: %3$d, widgets %2$s: %4$d, blocks renamed: %5$d, markup modernized: %6$d, markup skipped: %7$d.',
-				$this->posts_scanned,
-				$this->dry_run ? 'that would update' : 'updated',
-				$this->posts_updated,
-				$this->widgets_updated,
-				$this->migrator->renamed,
-				$this->migrator->modernized,
-				$this->migrator->skipped
-			)
-		);
+		$this->print_summary();
 
 		if ( $this->migrator->skipped > 0 ) {
 			WP_CLI::warning( 'Some blocks were renamed without markup modernization because no number could be read from their markup. Check them in the editor.' );
@@ -358,5 +347,47 @@ class MigrateFromKeyFigureBlockCommand extends WP_CLI_Command {
 		}
 
 		return array_values( array_filter( array_map( 'trim', explode( ',', $raw ) ) ) );
+	}
+
+	/**
+	 * Print migration counters as a CLI table.
+	 *
+	 * @return void
+	 */
+	private function print_summary(): void {
+		$updated_label = $this->dry_run ? 'would update' : 'updated';
+
+		WP_CLI::success( 'Done.' );
+
+		WP_CLI\Utils\format_items(
+			'table',
+			[
+				[
+					'metric' => 'Posts scanned',
+					'count'  => $this->posts_scanned,
+				],
+				[
+					'metric' => 'Posts ' . $updated_label,
+					'count'  => $this->posts_updated,
+				],
+				[
+					'metric' => 'Widgets ' . $updated_label,
+					'count'  => $this->widgets_updated,
+				],
+				[
+					'metric' => 'Blocks renamed',
+					'count'  => $this->migrator->renamed,
+				],
+				[
+					'metric' => 'Markup modernized',
+					'count'  => $this->migrator->modernized,
+				],
+				[
+					'metric' => 'Markup skipped',
+					'count'  => $this->migrator->skipped,
+				],
+			],
+			[ 'metric', 'count' ]
+		);
 	}
 }
