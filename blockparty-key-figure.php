@@ -15,6 +15,8 @@
 
 namespace Blockparty\Key_Figure;
 
+use Blockparty\Key_Figure\Cli\MigrateFromKeyFigureBlockCommand;
+
 define( 'BLOCKPARTY_KEY_FIGURE_VERSION', '1.1.1' );
 define( 'BLOCKPARTY_KEY_FIGURE_URL', plugin_dir_url( __FILE__ ) );
 define( 'BLOCKPARTY_KEY_FIGURE_DIR', plugin_dir_path( __FILE__ ) );
@@ -55,4 +57,11 @@ function init() {
 	do_action( 'blockparty_key_figure_block_init' );
 }
 
-add_action( 'init', __NAMESPACE__ . '\\init' );
+add_action( 'init', __NAMESPACE__ . '\\init', 10, 0 );
+
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once __DIR__ . '/includes/Migration/KeyFigureBlockMigrator.php';
+	require_once __DIR__ . '/includes/Cli/MigrateFromKeyFigureBlockCommand.php';
+
+	\WP_CLI::add_command( 'blockparty key-figure migrate', MigrateFromKeyFigureBlockCommand::class );
+}

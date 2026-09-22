@@ -48,7 +48,11 @@
 		"vimeo/psalm": "^5.20",
 		"wp-coding-standards/wpcs": "^3.0"
 	},
-	"autoload": {},
+	"autoload": {
+		"psr-4": {
+			"Blockparty\\Key_Figure\\": "includes/"
+		}
+	},
 	"autoload-dev": {},
 	"scripts": {
 		"cs": "./vendor/bin/phpcs",

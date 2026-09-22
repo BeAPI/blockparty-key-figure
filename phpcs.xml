@@ -7,6 +7,7 @@
 
     <!-- Scan all files in directory -->
     <file>blockparty-key-figure.php</file>
+    <file>./includes/</file>
 
     <exclude-pattern>./build/</exclude-pattern>
     <exclude-pattern>./node_modules/</exclude-pattern>
