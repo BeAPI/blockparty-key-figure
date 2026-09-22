@@ -5,10 +5,12 @@ on:
         paths:
             - 'composer.json'
             - 'blockparty-key-figure.php'
+            - 'includes/**'
     push:
         paths:
             - 'composer.json'
             - 'blockparty-key-figure.php'
+            - 'includes/**'
         branches:
             - main
 
