@@ -18,38 +18,9 @@ import {
 
 import classnames from 'classnames';
 
+import { formatNumber } from './utils/format-number';
+
 import './editor.scss';
-
-// Custom hook for number formatting
-function useNumberFormatter(number, decimalSeparator, minimumFractionDigits) {
-	const formatNumber = (numberToFormat) => {
-		if (!numberToFormat && numberToFormat !== 0) {
-			return numberToFormat;
-		}
-
-		if (decimalSeparator === 'none') {
-			return numberToFormat.toString();
-		} else if (decimalSeparator === '.' || decimalSeparator === ',') {
-			return (numberToFormat || 0)
-				.toString()
-				.replace('.', decimalSeparator);
-		}
-
-		const options = {
-			minimumFractionDigits: minimumFractionDigits || 0,
-		};
-
-		try {
-			return new Intl.NumberFormat(decimalSeparator, options).format(
-				numberToFormat
-			);
-		} catch (error) {
-			return numberToFormat.toString();
-		}
-	};
-
-	return formatNumber(number);
-}
 
 export default function Edit({ attributes, setAttributes }) {
 	const {
@@ -63,7 +34,7 @@ export default function Edit({ attributes, setAttributes }) {
 	} = attributes;
 
 	const numberRef = useRef();
-	const formattedNumber = useNumberFormatter(
+	const formattedNumber = formatNumber(
 		number,
 		decimalSeparator,
 		minimumFractionDigits
