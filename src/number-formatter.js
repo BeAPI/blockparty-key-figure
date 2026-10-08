@@ -1,32 +1,8 @@
 /**
- * Number formatting utility for Key Figure blocks
- * Frontend-only formatting (editor formatting handled in React components)
+ * Number formatting utility for Key Figure blocks (frontend).
  */
 
-function formatNumber(numberToFormat, decimalSeparator, minimumFractionDigits) {
-	if (!numberToFormat && numberToFormat !== 0) {
-		return numberToFormat;
-	}
-
-	if (decimalSeparator === 'none') {
-		return numberToFormat.toString();
-	} else if (decimalSeparator === '.' || decimalSeparator === ',') {
-		return (numberToFormat || 0).toString().replace('.', decimalSeparator);
-	}
-
-	const options = {
-		minimumFractionDigits: minimumFractionDigits || 0,
-	};
-
-	try {
-		return new Intl.NumberFormat(decimalSeparator, options).format(
-			numberToFormat
-		);
-	} catch (error) {
-		// Fallback to simple string conversion if formatting fails
-		return numberToFormat.toString();
-	}
-}
+import { formatNumber } from './utils/format-number';
 
 function initializeNumberFormatting() {
 	// Only run on frontend (not in editor)
