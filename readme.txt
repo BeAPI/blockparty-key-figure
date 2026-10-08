@@ -2,7 +2,7 @@
 Contributors:      beapi, candrietti
 Tags:              block, key, figure, gutenberg
 Tested up to:      6.5
-Stable tag:        1.1.1
+Stable tag:        1.1.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,9 @@ Run `wp help blockparty key-figure migrate` for the full list of options.
 
 = 1.1.0 - 2026-02-16 =
 * Markup change: __key wrapper was div, now p (a11y/semantic)
+
+= 1.1.2 - 2026-09-22 =
+* Add WP-CLI command to migrate legacy beapi/key-figure block content.
 
 = 1.1.1 - 2026-09-04 =
 * Add block example.
